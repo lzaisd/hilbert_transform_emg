@@ -109,9 +109,12 @@ def main():
 
 
 root = tk.Tk()
+x = (root.winfo_screenwidth() - root.winfo_reqwidth()) / 2
+y = (root.winfo_screenheight() - root.winfo_reqheight()) / 2
+root.geometry('400x50+100+100')
 root.title('EMG Analyzer')
 
-button = tk.Button(root, text='Загрузить файл', command=main)
+button = tk.Button(root, text='Загрузить файл и провести преобразование Гильберта', command=main)
 button.pack()
 
 root.mainloop()
