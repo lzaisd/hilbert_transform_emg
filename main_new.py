@@ -20,41 +20,14 @@ def fix(data_filtered):
     return data_filtered
 
 
-def analyse2(EMG):
-    analytics = []
-    for j in range(0, len(EMG) - alpha, alpha):
-        peaks, _ = signal.find_peaks(data_filtered[j:j + alpha])
-        # plt.plot(peaks, data_filtered[peaks], '.')
-        stat = data_filtered[peaks]
-        print(stat)
-        analytics.append(len(stat))
-    peaks, _ = signal.find_peaks(data_filtered, height=0)
-    plt.plot(peaks, data_filtered[peaks], '.')
-    plt.show()
-    start = 0
-    x_axis = []
-    for i in range(len(analytics)):
-        x_axis.append(start)
-        start += 1 / (fs / alpha)
-    x_axis = np.array(x_axis)
-    plt.plot(x_axis, analytics)
-    # plt.plot(x_axis, np.zeros_like(analytics)+10, color='red', label='Chel ustal')
-    plt.legend()
-    plt.ylabel('Count')
-    plt.xlabel('Time in sec')
-    plt.title('Peak statistics')
-    plt.show()
-    return analytics
+k = 1
+fs = 200
+alpha = fs // k
 
 
-if __name__ == '__main__':
+def main():
     fig, ax = plt.subplots()
     fig.set_size_inches(15, 8)
-
-    k = 1
-    fs = 200
-    alpha = fs // k
-
     filename = get_filename()
     data = np.loadtxt(filename, skiprows=4, usecols=1)
 
@@ -133,3 +106,12 @@ if __name__ == '__main__':
     # plt.legend()
     # plt.xlabel('Time, sec')
     plt.show()
+
+
+root = tk.Tk()
+root.title('EMG Analyzer')
+
+button = tk.Button(root, text='Загрузить файл', command=main)
+button.pack()
+
+root.mainloop()
